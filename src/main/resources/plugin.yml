@@ -1,0 +1,7 @@
+name: ListPlayersPlugin
+version: ${project.version}
+main: exodian.me.listplayersplugin.ListPlayersPlugin
+api-version: 1.13
+authors: [SamPom100]
+description: Lists all alive players
+website: github.com/SamPom100
