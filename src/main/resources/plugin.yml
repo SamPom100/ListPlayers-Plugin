@@ -11,3 +11,11 @@ permissions:
   listplayers.use:
     description: Includes you in the list
     default: true
+
+
+commands:
+  mask:
+    description: List alive players.
+    usage: /listplayers
+    permission: listplayers.use
+    permission-message: You don't have permission to do that

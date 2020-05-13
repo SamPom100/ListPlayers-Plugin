@@ -23,21 +23,25 @@ public class Manager implements Listener {
             @Override
             public void run() {
                 Player player = event.getPlayer();
-                final Team bros = player.getServer().getScoreboardManager().getMainScoreboard().getTeam("Brothers");
-                final Team leader = player.getServer().getScoreboardManager().getMainScoreboard().getTeam("Leader");
-                final Team acolyte = player.getServer().getScoreboardManager().getMainScoreboard().getTeam("Acolyte");
-                final String name = player.getName();
+                try {
+                    final Team bros = player.getServer().getScoreboardManager().getMainScoreboard().getTeam("Brothers");
+                    final Team leader = player.getServer().getScoreboardManager().getMainScoreboard().getTeam("Leader");
+                    final Team acolyte = player.getServer().getScoreboardManager().getMainScoreboard().getTeam("Acolyte");
+                    final String name = player.getName();
 
-                if (bros.hasEntry(name) && !plugin.getConfig().contains(name)) {
-                    plugin.getConfig().set("alivePlayers.Brother", player.getName());
-                } else if (leader.hasEntry(name) && !plugin.getConfig().contains(name)) {
-                    plugin.getConfig().set("alivePlayers.Leader", player.getName());
-                } else if (acolyte.hasEntry(name) && !plugin.getConfig().contains(name)) {
-                    plugin.getConfig().set("alivePlayers.Acolyte", player.getName());
-                } else {
-                    plugin.getConfig().set("alivePlayers.Serf", player.getName());
+                    if (bros.hasEntry(name) && !plugin.getConfig().contains(name)) {
+                        plugin.getConfig().set("alivePlayers.Brother.name", player.getName());
+                    } else if (leader.hasEntry(name) && !plugin.getConfig().contains(name)) {
+                        plugin.getConfig().set("alivePlayers.Leader.name", player.getName());
+                    } else if (acolyte.hasEntry(name) && !plugin.getConfig().contains(name)) {
+                        plugin.getConfig().set("alivePlayers.Acolyte.name", player.getName());
+                    } else {
+                        plugin.getConfig().set("alivePlayers.Serf.name", player.getName());
+                    }
+                    plugin.saveConfig();
+                } catch (Exception e) {
+                    System.out.print("Error adding new player");
                 }
-                plugin.saveConfig();
             }
         }, 150);
     }
@@ -46,22 +50,26 @@ public class Manager implements Listener {
     public void onLeave(PlayerQuitEvent event) {
         Player player = event.getPlayer();
         if (player.getGameMode() == GameMode.SPECTATOR) {
-            final Team bros = player.getServer().getScoreboardManager().getMainScoreboard().getTeam("Brothers");
-            final Team leader = player.getServer().getScoreboardManager().getMainScoreboard().getTeam("Leader");
-            final Team acolyte = player.getServer().getScoreboardManager().getMainScoreboard().getTeam("Acolyte");
-            final String name = player.getName();
+            try {
+                final Team bros = player.getServer().getScoreboardManager().getMainScoreboard().getTeam("Brothers");
+                final Team leader = player.getServer().getScoreboardManager().getMainScoreboard().getTeam("Leader");
+                final Team acolyte = player.getServer().getScoreboardManager().getMainScoreboard().getTeam("Acolyte");
+                final String name = player.getName();
 
-            if (bros.hasEntry(name)) {
-                plugin.getConfig().set("alivePlayers.Brother." + player.getName(), null);
-            } else if (leader.hasEntry(name)) {
-                plugin.getConfig().set("alivePlayers.Leader." + player.getName(), null);
-            } else if (acolyte.hasEntry(name)) {
-                plugin.getConfig().set("alivePlayers.Acolyte." + player.getName(), null);
-            } else {
-                plugin.getConfig().set("alivePlayers.Serf." + player.getName(), null);
+                if (bros.hasEntry(name)) {
+                    plugin.getConfig().set("alivePlayers.Brother.name" + player.getName(), null);
+                } else if (leader.hasEntry(name)) {
+                    plugin.getConfig().set("alivePlayers.Leader.name" + player.getName(), null);
+                } else if (acolyte.hasEntry(name)) {
+                    plugin.getConfig().set("alivePlayers.Acolyte.name" + player.getName(), null);
+                } else {
+                    plugin.getConfig().set("alivePlayers.Serf.name" + player.getName(), null);
+                }
+                plugin.saveConfig();
+
+            } catch (Exception e) {
+                System.out.print("Error removing player");
             }
-            plugin.saveConfig();
         }
-
     }
 }
