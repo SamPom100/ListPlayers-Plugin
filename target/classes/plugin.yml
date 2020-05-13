@@ -14,7 +14,7 @@ permissions:
 
 
 commands:
-  mask:
+  listplayers:
     description: List alive players.
     usage: /listplayers
     permission: listplayers.use
